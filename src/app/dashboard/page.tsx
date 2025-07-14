@@ -1,0 +1,25 @@
+"use client"
+import dynamic from "next/dynamic"
+import { useMemo } from "react"
+
+/* 
+import { useState } from "react" */
+
+const Page = () => {
+  /*   const [editor, setEditor] = useState<null | string>(null)
+
+  console.log("Editor content:", editor) */
+  const Editor = useMemo(
+    () =>
+      dynamic(() => import("../(components)/Editor"), {
+        ssr: false,
+      }),
+    []
+  )
+  return (
+    <div className="h-screen w-full bg-[#1F1F1F]">
+      <Editor />
+    </div>
+  )
+}
+export default Page
