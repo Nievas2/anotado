@@ -2,13 +2,7 @@
 import dynamic from "next/dynamic"
 import { useMemo } from "react"
 
-/* 
-import { useState } from "react" */
-
 const Page = () => {
-  /*   const [editor, setEditor] = useState<null | string>(null)
-
-  console.log("Editor content:", editor) */
   const Editor = useMemo(
     () =>
       dynamic(() => import("../(components)/Editor"), {
