@@ -1,7 +1,10 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
+import EditorHome from "./(components)/EditorHome"
+import { metadata } from "./layout"
 import Link from "next/link"
 
-export default function NotionCloneLanding() {
+export default function LandingPage() {
+  metadata.title = "Anotado | Inicio"
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 w-full">
       {/* Hero Section */}
@@ -25,7 +28,7 @@ export default function NotionCloneLanding() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="dashboard">
                 <button className="bg-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-medium hover:bg-indigo-500 transition-all duration-200 transform hover:scale-105 flex items-center gap-2">
-                  Comenzar Gratis
+                  Comenzar
                   <Icon
                     icon="material-symbols:arrow-right-alt-rounded"
                     className="w-5 h-5"
@@ -39,17 +42,7 @@ export default function NotionCloneLanding() {
           <div className="mt-16 relative">
             <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 mx-auto max-w-4xl">
               <div className="bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl h-96 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gray-600 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                    <Icon
-                      icon="material-symbols:preview"
-                      className="w-8 h-8 text-gray-200"
-                    />
-                  </div>
-                  <p className="text-gray-300 text-lg">
-                    Vista previa de la interfaz
-                  </p>
-                </div>
+                <EditorHome />
               </div>
             </div>
           </div>
@@ -57,7 +50,7 @@ export default function NotionCloneLanding() {
       </section>
 
       {/* Features Section */}
-     {/*  <section id="features" className="py-20 bg-gray-900">
+      {/*  <section id="features" className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
