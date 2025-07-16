@@ -1,7 +1,18 @@
+"use client"
 import { motion } from "motion/react"
 import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 const IconTheme = () => {
   const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
 
   return (
     <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
