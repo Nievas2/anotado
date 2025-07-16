@@ -4,9 +4,9 @@ import { metadata } from "./layout"
 import Link from "next/link"
 
 export default function LandingPage() {
-  metadata.title = "Anotado | Inicio"
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 w-full">
+      <title>Anotado | Inicio</title>
       {/* Hero Section */}
       <section className="py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
