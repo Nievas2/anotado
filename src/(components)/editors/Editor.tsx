@@ -30,4 +30,5 @@ export default function Editor() {
   })
   // Renders the editor instance using a React component.
   return <BlockNoteView title="Anotado" editor={editor} className="p-4 w-full" />
+  
 }
