@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
-import EditorHome from "./(components)/EditorHome"
+import EditorHome from "./(components)/editors/EditorHome"
 import Link from "next/link"
 
 export default function LandingPage() {

@@ -5,7 +5,7 @@ import { useMemo } from "react"
 const Page = () => {
   const Editor = useMemo(
     () =>
-      dynamic(() => import("../(components)/Editor"), {
+      dynamic(() => import("../(components)/editors/Editor"), {
         ssr: false,
       }),
     []
