@@ -27,6 +27,7 @@ interface NoteState {
     noteId: string,
     updates: Partial<Omit<Note, "id" | "createdAt">>
   ) => void
+  createNote: (note: Omit<Note, "id" | "createdAt" | "updatedAt">) => void
   deleteNote: (noteId: string) => void
   getNoteById: (noteId: string) => Note | undefined
   getNotesByTag: (tag: string) => Note[]
@@ -40,6 +41,19 @@ const storeApi: StateCreator<NoteState, [["zustand/immer", never]]> = (
   notes: [],
 
   addNote: (noteData) => {
+    const newNote: Note = {
+      id: crypto.randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      ...noteData,
+    }
+
+    set((state) => {
+      state.notes.push(newNote)
+    })
+  },
+
+  createNote: (noteData) => {
     const newNote: Note = {
       id: crypto.randomUUID(),
       createdAt: new Date(),
@@ -116,12 +130,3 @@ export const useNoteStore = create<NoteState>()(
 
 // Hooks personalizados para facilitar el uso
 export const useNotes = () => useNoteStore((state) => state.notes)
-export const useNoteActions = () =>
-  useNoteStore((state) => ({
-    addNote: state.addNote,
-    updateNote: state.updateNote,
-    deleteNote: state.deleteNote,
-    getNoteById: state.getNoteById,
-    getNotesByTag: state.getNotesByTag,
-    clearAllNotes: state.clearAllNotes,
-  }))
