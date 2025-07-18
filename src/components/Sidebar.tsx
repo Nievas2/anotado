@@ -1,7 +1,6 @@
 "use client"
 import { useNotes, useNoteStore } from "@/stores/notes.store"
 import { Icon } from "@iconify/react/dist/iconify.js"
-import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import SidebarItem from "./SidebarItem"
 

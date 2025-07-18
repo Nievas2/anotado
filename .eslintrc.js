@@ -1,8 +1,10 @@
+// .eslintrc.js
 module.exports = {
-  extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  root: true,
+  extends: ["next", "next/core-web-vitals", "eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint"],
   rules: {
-    "@typescript-eslint/no-explicit-any": "off", // Disables the rule
-    // or to change it to a warning instead of an error:
-    // "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-explicit-any": "off", // <-- desactiva el error por usar any
   },
 }
