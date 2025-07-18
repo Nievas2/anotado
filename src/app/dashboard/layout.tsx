@@ -4,7 +4,7 @@ const layout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <div className="h-full w-full">
+    <div className="flex flex-1 w-full">
       <title>Anotado | Editor</title>
       {children}
     </div>
