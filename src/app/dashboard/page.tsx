@@ -2,10 +2,10 @@
 import Sidebar from "@/components/Sidebar"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import dynamic from "next/dynamic"
+import { Suspense, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useMemo, useState } from "react"
 
-const Page = () => {
+const PageContent = () => {
   const [open, setOpen] = useState(true)
   const note = useSearchParams().get("note")
   const Editor = useMemo(
@@ -49,4 +49,11 @@ const Page = () => {
     </div>
   )
 }
+
+const Page = () => (
+  <Suspense>
+    <PageContent />
+  </Suspense>
+)
+
 export default Page
