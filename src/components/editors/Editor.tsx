@@ -6,6 +6,8 @@ import "@blocknote/mantine/style.css"
 
 // Our <Editor> component we can reuse later
 export default function Editor({ id }: { id: string }) {
+  console.log(id)
+
   // Creates a new editor instance.
   const editor = useCreateBlockNote()
 

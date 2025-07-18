@@ -3,7 +3,6 @@ import Sidebar from "@/components/Sidebar"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import dynamic from "next/dynamic"
 import { useSearchParams } from "next/navigation"
-import { useRouter } from "next/router"
 import { useEffect, useMemo, useState } from "react"
 
 const Page = () => {

@@ -1,5 +1,4 @@
 "use client"
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { useNotes, useNoteStore } from "@/stores/notes.store"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import Link from "next/link"
@@ -53,7 +52,7 @@ const Sidebar = ({
     >
       <div className="flex flex-col gap-2 sticky top-20 w-full h-[88vh]">
         {/* Header */}
-        <Link className={`flex items-center justify-center`} href="/dashboard">
+        {/* <Link className={`flex items-center justify-center`} href="/dashboard">
           Todos
         </Link>
 
@@ -67,7 +66,7 @@ const Sidebar = ({
           <p className="mx-1 mb-0 text-center text-xs">
             <span className="text-white">Notas</span>
           </p>
-        </div>
+        </div> */}
 
         {/* Navigation */}
         <nav className="flex flex-col justify-between h-full gap-y-1">
