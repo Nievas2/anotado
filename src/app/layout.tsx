@@ -1,8 +1,8 @@
-import type { Metadata } from "next"
+import { ThemeProviderWrapper } from "@/components/ThemeProvider"
 import { Geist, Geist_Mono } from "next/font/google"
-import "./globals.css"
 import Navbar from "../components/Navbar"
-import { ThemeProvider } from "@/contexts/themeContext"
+import type { Metadata } from "next"
+import "./globals.css"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,16 +29,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col w-full max-w-8xl min-h-screen items-center justify-center`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-          storageKey="anotado-theme"
-        >
+        <ThemeProviderWrapper>
           <Navbar />
           {children}
-        </ThemeProvider>
+        </ThemeProviderWrapper>
       </body>
     </html>
   )
