@@ -2,7 +2,7 @@ import { StateCreator, create } from "zustand"
 import { persist } from "zustand/middleware"
 import { immer } from "zustand/middleware/immer"
 
-// Tipos para BlockNote
+// Tipos para BlockNote - usando el tipo correcto de BlockNote
 interface BlockNoteBlock {
   id: string
   type: string
@@ -11,10 +11,10 @@ interface BlockNoteBlock {
   children?: BlockNoteBlock[]
 }
 
-interface Note {
+export interface Note {
   id: string
   title: string
-  content: BlockNoteBlock[]
+  content: BlockNoteBlock[] // Este debe coincidir con el formato de BlockNote
   createdAt: Date
   updatedAt: Date
   tags?: string[]
@@ -32,6 +32,9 @@ interface NoteState {
   getNoteById: (noteId: string) => Note | undefined
   getNotesByTag: (tag: string) => Note[]
   clearAllNotes: () => void
+  // Nuevos métodos para BlockNote
+  createEmptyNote: () => string // Retorna el ID de la nueva nota
+  updateNoteContent: (noteId: string, content: BlockNoteBlock[]) => void
 }
 
 const storeApi: StateCreator<NoteState, [["zustand/immer", never]]> = (
@@ -66,6 +69,23 @@ const storeApi: StateCreator<NoteState, [["zustand/immer", never]]> = (
     })
   },
 
+  createEmptyNote: () => {
+    const newNote: Note = {
+      id: crypto.randomUUID(),
+      title: "Nueva nota",
+      content: [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      tags: [],
+    }
+
+    set((state) => {
+      state.notes.push(newNote)
+    })
+
+    return newNote.id
+  },
+
   updateNote: (noteId, updates) => {
     set((state) => {
       const noteIndex = state.notes.findIndex(
@@ -77,6 +97,18 @@ const storeApi: StateCreator<NoteState, [["zustand/immer", never]]> = (
           ...updates,
           updatedAt: new Date(),
         }
+      }
+    })
+  },
+
+  updateNoteContent: (noteId, content) => {
+    set((state) => {
+      const noteIndex = state.notes.findIndex(
+        (note: { id: string }) => note.id === noteId
+      )
+      if (noteIndex !== -1) {
+        state.notes[noteIndex].content = content
+        state.notes[noteIndex].updatedAt = new Date()
       }
     })
   },

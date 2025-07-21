@@ -15,27 +15,29 @@ const Sidebar = ({
   const noteId = useSearchParams().get("note")
   const notes = useNotes()
   const handleAddNote = () => {
+    const noteTitle = "Mi nueva nota"
+
     addNote({
-      title: "Mi nueva nota",
+      title: noteTitle,
       content: [
         {
           id: "block1",
-          type: "paragraph",
-          content: [{ type: "text", text: "Contenido de la nota" }],
+          type: "heading",
+          content: [{ type: "text", text: noteTitle }], // ✅ Mismo valor que el título
         },
       ],
       tags: ["importante", "trabajo"],
     })
   }
-
+  
   const handleCreateNote = () => {
     createNote({
       title: "Nueva nota",
       content: [
         {
           id: "block1",
-          type: "paragraph",
-          content: [{ type: "text", text: "Contenido de la nueva nota" }],
+          type: "heading",
+          content: [{ type: "text", text: "Nueva nota" }],
         },
       ],
     })
