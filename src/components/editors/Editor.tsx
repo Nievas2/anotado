@@ -1,12 +1,12 @@
-"use client" // this registers <Editor> as a Client Component
+"use client"
 import { useCreateBlockNote } from "@blocknote/react"
 import { BlockNoteView } from "@blocknote/mantine"
 import "@blocknote/core/fonts/inter.css"
 import "@blocknote/mantine/style.css"
 import { useEffect, useCallback, useRef, useMemo } from "react"
 import { useNoteStore } from "@/stores/notes.store"
+import debounce from "lodash.debounce"
 
-// Our <Editor> component we can reuse later
 export default function Editor({ id }: { id: string }) {
   const editor = useCreateBlockNote()
   const lastSavedContentRef = useRef<string>("")
@@ -18,9 +18,7 @@ export default function Editor({ id }: { id: string }) {
     if (id) {
       const note = getNoteById(id)
       if (note && note.content) {
-        // Cargar el contenido de la nota en el editor
         editor.replaceBlocks(editor.document, note.content)
-        // Actualizar la referencia del último contenido guardado
         lastSavedContentRef.current = JSON.stringify(note.content)
       }
     }
@@ -28,16 +26,11 @@ export default function Editor({ id }: { id: string }) {
 
   const saveNote = useCallback(
     async (content: any[]) => {
-      if (isSavingRef.current) return // Evitar guardados concurrentes
-
+      if (isSavingRef.current) return
       isSavingRef.current = true
 
       try {
-        updateNote(id, {
-          content: content,
-        })
-
-        // Actualizar la referencia del último contenido guardado
+        updateNote(id, { content })
         lastSavedContentRef.current = JSON.stringify(content)
       } catch (error) {
         console.error("Error saving note:", error)
@@ -47,18 +40,33 @@ export default function Editor({ id }: { id: string }) {
     },
     [id, updateNote]
   )
-  // Función para manejar cambios con debounce inteligente
-  const handleChange = useCallback(async () => {
+
+  const debouncedSave = useMemo(
+    () =>
+      debounce(async (content: any[]) => {
+        await saveNote(content)
+      }, 1000), // ajustá el tiempo si querés (1000ms = 1s)
+    [saveNote]
+  )
+
+  useEffect(() => {
+    return () => {
+      debouncedSave.cancel()
+    }
+  }, [debouncedSave])
+
+  const handleChange = useCallback(() => {
     if (!id) return
     const currentContent = editor.document
     const currentContentString = JSON.stringify(currentContent)
+
     if (currentContentString === lastSavedContentRef.current) {
       return
     }
-    await saveNote(currentContent)
-  }, [id, editor])
 
-  // Renders the editor instance using a React component.
+    debouncedSave(currentContent)
+  }, [id, editor, debouncedSave])
+
   return (
     <BlockNoteView
       title="Anotado"
