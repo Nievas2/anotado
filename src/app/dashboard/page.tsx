@@ -19,13 +19,13 @@ const PageContent = () => {
     console.log("Note ID:", note)
   }, [note])
   return (
-    <div className="flex w-full bg-[#1F1F1F] relative">
+    <div className="flex w-full bg-slate-200 dark:bg-[#1F1F1F] relative">
       <Sidebar open={open} setOpen={setOpen} />
       <button
         onClick={() => setOpen(!open)}
         className={`${
           !open ?
-          "absolute left-4 bottom-2 p-2 rounded-md bg-gray-700 cursor-pointer w-fit" :"invisible"
+          "absolute left-4 bottom-2 p-2 rounded-md bg-gray-700 cursor-pointer w-fit" :"hidden"
         }`}
       >
         <Icon
@@ -40,7 +40,7 @@ const PageContent = () => {
           <Editor id={note} />
         ) : (
           <div className="flex items-center justify-center w-full h-full">
-            <h1 className="text-white text-2xl">
+            <h1 className="text-black dark:text-white text-2xl">
               Selecciona una nota para editar
             </h1>
           </div>
