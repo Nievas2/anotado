@@ -27,7 +27,10 @@ const LandingPage = () => {
             <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed transition-colors duration-300">
               Sin complicaciones, sin distracciones y sin logueos.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              href="/dashboard"
+            >
               <button className="bg-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-medium hover:bg-indigo-700 dark:hover:bg-indigo-500 transition-all duration-200 transform hover:scale-105 flex items-center gap-2">
                 Comenzar
                 <Icon
@@ -35,7 +38,7 @@ const LandingPage = () => {
                   className="w-5 h-5"
                 />
               </button>
-            </div>
+            </Link>
           </div>
 
           {/* Hero Image Placeholder */}
