@@ -121,7 +121,7 @@ const Sidebar = ({
   return (
     <>
       <aside
-        className={`bg-gradient-to-br from-indigo-100 via-white to-blue-50 dark:from-gray-900 dark:to-gray-800 h-full transition-all duration-300 top-0 z-[45] absolute sm:sticky sm:top-0 ${
+        className={`bg-gradient-to-br from-indigo-100 via-white to-blue-50 dark:from-gray-900 dark:to-gray-800 h-full transition-all duration-300 top-0 z-[45] sm:z-0 absolute sm:sticky sm:top-0 ${
           open
             ? "-left-0 w-[260px] sm:w-[420px] sm:max-w-[420px]"
             : "-left-full w-16"
