@@ -2,12 +2,65 @@
 import { useEffect, useCallback, useRef, useMemo, useState } from "react"
 import { BlockNoteEditor, PartialBlock } from "@blocknote/core"
 import { useNoteStore } from "@/stores/notes.store"
-import { BlockNoteView } from "@blocknote/mantine"
+import { BlockNoteView, darkDefaultTheme, lightDefaultTheme, Theme } from "@blocknote/mantine"
 import debounce from "lodash.debounce"
 import "@blocknote/core/fonts/inter.css"
 import "@blocknote/mantine/style.css"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { Tooltip } from "react-tooltip"
+
+const lightRedTheme = {
+  colors: {
+    editor: {
+      text: "#222222",
+      background: "#fff",
+    },
+    menu: {
+      text: "#000",
+      background: "#ffeeee"
+    },
+    tooltip: {
+      text: "#000",
+      background: "#ffeeee",
+    },
+    hovered: {
+      text: "#000",
+      background: "#ffeeee",
+    },
+    selected: {
+      text: "#000",
+      background: "#fff",
+    },
+    disabled: {
+      text: "#fff",
+      background: "#fff",
+    },
+    shadow: "#fff",
+    border: "#fff",
+    sideMenu: "#fff",
+    highlights: lightDefaultTheme.colors!.highlights,
+  },
+  borderRadius: 4,
+  fontFamily: "Helvetica Neue, sans-serif",
+} satisfies Theme
+
+const darkRedTheme = {
+  ...lightRedTheme,
+  colors: {
+    ...lightRedTheme.colors,
+    editor: {
+      text: "#fff",
+      background: "#1f1f1f",
+    },
+    sideMenu: "#fff",
+    highlights: darkDefaultTheme.colors!.highlights,
+  },
+} satisfies Theme
+
+const theme = {
+  light: lightRedTheme,
+  dark: darkRedTheme,
+};
 
 export default function Editor({ id }: { id: string }) {
   const getNoteById = useNoteStore((state: any) => state.getNoteById)
@@ -175,7 +228,7 @@ export default function Editor({ id }: { id: string }) {
   }
 
   return (
-    <section className="flex flex-col gap-2 h-full w-full bg-[#1F1F1F]">
+    <section className="flex flex-col gap-2 h-full w-full">
       <div className="flex items-center justify-end gap-6 p-2">
         <ExportCopy />
         <button
@@ -190,7 +243,8 @@ export default function Editor({ id }: { id: string }) {
       <BlockNoteView
         title="Anotado"
         editor={editor}
-        className="p-4 w-full"
+        className="p-1 w-full z-40"
+        theme={theme}
         onChange={handleChange}
       />
 
