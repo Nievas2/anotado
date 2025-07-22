@@ -121,7 +121,7 @@ const Sidebar = ({
   return (
     <>
       <aside
-        className={`bg-gray-900 h-full transition-all duration-300 top-0 z-40 absolute sm:sticky sm:top-0 ${
+        className={`bg-gradient-to-br from-indigo-100 via-white to-blue-50 dark:from-gray-900 dark:to-gray-800 h-full transition-all duration-300 top-0 z-[45] absolute sm:sticky sm:top-0 ${
           open
             ? "-left-0 w-[260px] sm:w-[420px] sm:max-w-[420px]"
             : "-left-full w-16"
@@ -146,7 +146,7 @@ const Sidebar = ({
             <div className="flex flex-col gap-1">
               <button
                 onClick={handleAddNote}
-                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer hover:bg-gray-700 font-medium text-xs`}
+                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer dark:hover:bg-gray-700 hover:bg-blue-300 font-medium text-xs text-black dark:text-white`}
               >
                 <Icon icon="akar-icons:plus" width="20" height="20" />
                 {open && <span className="text-sm">Nueva nota</span>}
@@ -154,7 +154,7 @@ const Sidebar = ({
 
               <button
                 onClick={() => setShowImportModal(true)}
-                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer hover:bg-gray-700 font-medium text-xs`}
+                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer hover:bg-blue-300 dark:hover:bg-gray-700 font-medium text-xs text-black dark:text-white`}
               >
                 <Icon icon="material-symbols:upload" width="20" height="20" />
                 {open && <span className="text-sm">Importar nota</span>}

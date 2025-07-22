@@ -61,8 +61,8 @@ const SidebarItem = ({
       key={note.id}
       className={`flex items-center justify-center gap-2 p-2 rounded-md cursor-pointer w-full ${
         note.id === noteId
-          ? "bg-gray-700 font-bold"
-          : "hover:bg-gray-700 font-medium"
+          ? "bg-blue-300 dark:bg-gray-700 font-bold"
+          : "hover:bg-blue-300 dark:hover:bg-gray-700 font-medium"
       }`}
       href={`/dashboard?note=${note.id}`}
       /* onClick={() => handleUpdateNote(note.id)} */
@@ -70,8 +70,15 @@ const SidebarItem = ({
       {open ? (
         <div className="flex items-center justify-between gap-2 w-full">
           <div className="flex gap-1 items-center">
-            <Icon icon="akar-icons:file" width="20" height="20" />
-            <span className="text-sm">{note.title}</span>
+            <Icon
+              icon="akar-icons:file"
+              className="text-black dark:text-white"
+              width="20"
+              height="20"
+            />
+            <span className="text-sm text-black dark:text-white">
+              {note.title}
+            </span>
           </div>
           <Menu>
             <MenuButton>
@@ -79,7 +86,7 @@ const SidebarItem = ({
                 icon="material-symbols:more-vert"
                 width="20"
                 height="20"
-                className="text-white"
+                className="text-black dark:text-white"
               />
             </MenuButton>
             <MenuItems
