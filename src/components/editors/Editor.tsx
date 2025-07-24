@@ -2,7 +2,12 @@
 import { useEffect, useCallback, useRef, useMemo, useState } from "react"
 import { BlockNoteEditor, PartialBlock } from "@blocknote/core"
 import { useNoteStore } from "@/stores/notes.store"
-import { BlockNoteView, darkDefaultTheme, lightDefaultTheme, Theme } from "@blocknote/mantine"
+import {
+  BlockNoteView,
+  darkDefaultTheme,
+  lightDefaultTheme,
+  Theme,
+} from "@blocknote/mantine"
 import debounce from "lodash.debounce"
 import "@blocknote/core/fonts/inter.css"
 import "@blocknote/mantine/style.css"
@@ -17,7 +22,7 @@ const lightRedTheme = {
     },
     menu: {
       text: "#000",
-      background: "#ffeeee"
+      background: "#ffeeee",
     },
     tooltip: {
       text: "#000",
@@ -60,7 +65,7 @@ const darkRedTheme = {
 const theme = {
   light: lightRedTheme,
   dark: darkRedTheme,
-};
+}
 
 export default function Editor({ id }: { id: string }) {
   const getNoteById = useNoteStore((state: any) => state.getNoteById)
@@ -221,7 +226,7 @@ export default function Editor({ id }: { id: string }) {
         <Tooltip
           id="export-tooltip"
           place="bottom"
-          style={{ fontSize: "0.8rem" }}
+          style={{ fontSize: "0.8rem", zIndex: 1000 }}
         />
       </>
     )
@@ -251,11 +256,9 @@ export default function Editor({ id }: { id: string }) {
       {/* Modal de Importación */}
       {showImportModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-[#2A2A2A] rounded-lg p-6 w-full max-w-2xl mx-4">
+          <div className="bg-slate-200 dark:bg-[#2A2A2A] text-black dark:text-white rounded-lg p-6 w-full max-w-2xl mx-4">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-white">
-                Importar Contenido
-              </h2>
+              <h2 className="text-xl font-semibold">Importar Nueva Nota</h2>
               <button
                 onClick={handleImportModalClose}
                 className="text-gray-400 hover:text-white"
@@ -265,8 +268,8 @@ export default function Editor({ id }: { id: string }) {
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Pega aquí el contenido exportado o texto plano:
+              <label className="block text-sm font-medium text-gray-800 dark:text-white mb-2">
+                Contenido a importar:
               </label>
               <textarea
                 value={importText}
@@ -274,8 +277,8 @@ export default function Editor({ id }: { id: string }) {
                   setImportText(e.target.value)
                   if (importError) setImportError("")
                 }}
-                className="w-full h-40 p-3 bg-[#1F1F1F] border border-gray-600 rounded-md text-white resize-none focus:outline-none focus:border-blue-500"
-                placeholder="Pega aquí tu contenido..."
+                className="w-full h-40 p-3 bg-gray-200 dark:bg-[#1F1F1F] border border-gray-600 rounded-md  resize-none focus:outline-none focus:border-blue-500"
+                placeholder="Pega aquí el contenido exportado o texto plano..."
               />
               {importError && (
                 <p className="text-red-400 text-sm mt-2">{importError}</p>
@@ -285,24 +288,24 @@ export default function Editor({ id }: { id: string }) {
             <div className="flex items-center justify-end gap-3">
               <button
                 onClick={handleImportModalClose}
-                className="px-4 py-2 text-gray-300 hover:text-white transition-colors"
+                className="px-4 py-2 text-gray-800 hover:text-gray-800/80 dark:text-white dark:hover:text-white/20 transition-colors"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleImport}
-                disabled={!importText.trim()}
+                disabled={!importText.trim() || !importText.trim()}
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-md transition-colors"
               >
-                Importar
+                Crear Nota
               </button>
             </div>
 
-            <div className="mt-4 p-3 bg-[#1A1A1A] rounded-md">
-              <p className="text-xs text-gray-400">
-                <strong>Tip:</strong> Puedes pegar contenido exportado desde
-                esta aplicación (formato JSON) o simplemente texto plano que
-                será convertido automáticamente.
+            <div className="mt-4 p-3 bg-gray-300 dark:bg-[#1A1A1A] rounded-md">
+              <p className="text-xs text-black dark:text-gray-400">
+                <strong>Tip:</strong> Se creará una nueva nota con el título y
+                contenido especificados. Puedes pegar contenido exportado (JSON)
+                o texto plano que será convertido automáticamente.
               </p>
             </div>
           </div>
