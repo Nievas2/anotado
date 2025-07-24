@@ -132,21 +132,37 @@ const Sidebar = ({
           {/* Navigation */}
           <nav className="flex flex-col justify-between h-full gap-y-1">
             <div className="flex flex-col gap-1 overflow-y-auto max-h-[400px]">
-              {notes.map((note) => (
-                <SidebarItem
-                  key={note.id}
-                  note={note}
-                  noteId={noteId}
-                  open={open}
-                />
-              ))}
+              {notes.length > 0 ? (
+                notes.map((note) => (
+                  <SidebarItem
+                    key={note.id}
+                    note={note}
+                    noteId={noteId}
+                    open={open}
+                  />
+                ))
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-800 dark:text-gray-500">
+                  <p className="text-sm">No hay notas disponibles</p>
+                </div>
+              )}
             </div>
 
             {/* Botones de acción */}
-            <div className="flex flex-col gap-1">
+            <div
+              className={`flex flex-col gap-1 ${
+                open
+                  ? "items-start justify-center px-2"
+                  : "items-center justify-center"
+              }`}
+            >
               <button
                 onClick={handleAddNote}
-                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer dark:hover:bg-gray-700 hover:bg-blue-300 font-medium text-xs text-black dark:text-white`}
+                className={`flex ${
+                  open
+                    ? "items-center justify-start px-2"
+                    : "items-center justify-center"
+                } gap-2 p-2 rounded-md cursor-pointer dark:hover:bg-gray-700 hover:bg-blue-300 font-medium text-xs text-black dark:text-white w-full`}
               >
                 <Icon icon="akar-icons:plus" width="20" height="20" />
                 {open && <span className="text-sm">Nueva nota</span>}
@@ -154,7 +170,11 @@ const Sidebar = ({
 
               <button
                 onClick={() => setShowImportModal(true)}
-                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer hover:bg-blue-300 dark:hover:bg-gray-700 font-medium text-xs text-black dark:text-white`}
+                className={`flex ${
+                  open
+                    ? "items-center justify-start px-2"
+                    : "items-center justify-center"
+                } gap-2 p-2 rounded-md cursor-pointer hover:bg-blue-300 dark:hover:bg-gray-700 font-medium text-xs text-black dark:text-white w-full`}
               >
                 <Icon icon="material-symbols:upload" width="20" height="20" />
                 {open && <span className="text-sm">Importar nota</span>}

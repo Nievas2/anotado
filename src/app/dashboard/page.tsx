@@ -40,7 +40,7 @@ const PageContent = () => {
           <Editor id={note} />
         ) : (
           <div className="flex items-center justify-center w-full h-full">
-            <h1 className="text-black dark:text-white text-2xl">
+            <h1 className="text-black dark:text-white text-2xl text-center">
               Selecciona una nota para editar
             </h1>
           </div>

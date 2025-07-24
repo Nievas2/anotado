@@ -135,7 +135,7 @@ const SidebarItem = ({
         <Icon
           icon="akar-icons:file"
           width="20"
-          className="text-white font-bold"
+          className="text-black dark:text-white font-bold"
         />
       )}
     </Link>

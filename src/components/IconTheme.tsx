@@ -69,7 +69,7 @@ const IconTheme = () => {
             },
           }}
           initial="hidden"
-          animate={theme === "light" ? "visible" : "hidden"}
+          animate={theme !== "dark" ? "visible" : "hidden"}
           className="stroke-6 stroke-[#EFBF04] "
           style={{ strokeLinecap: "round" }}
         >
