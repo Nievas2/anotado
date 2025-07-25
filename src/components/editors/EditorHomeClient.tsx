@@ -44,7 +44,13 @@ export default function EditorHome() {
       previousContent = editor.document
     }
   })
-
+  if (!editor) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        Cargando editor...
+      </div>
+    )
+  }
   return (
     <BlockNoteView title="Anotado" editor={editor} className="p-4 w-full" />
   )

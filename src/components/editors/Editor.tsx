@@ -30,7 +30,7 @@ const lightRedTheme = {
     },
     hovered: {
       text: "#000",
-      background: "#ffeeee",
+      background: "#bbb",
     },
     selected: {
       text: "#000",
@@ -62,7 +62,7 @@ const darkRedTheme = {
   },
 } satisfies Theme
 
-const theme = {
+const themeStyle = {
   light: lightRedTheme,
   dark: darkRedTheme,
 }
@@ -249,7 +249,7 @@ export default function Editor({ id }: { id: string }) {
         title="Anotado"
         editor={editor}
         className="p-1 w-full z-40"
-        theme={theme}
+        theme={themeStyle}
         onChange={handleChange}
       />
 
