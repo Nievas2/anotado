@@ -1,9 +1,11 @@
 "use client"
-import { useNoteStore } from "@/stores/notes.store"
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { Icon } from "@iconify/react/dist/iconify.js"
-import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
+import { useNoteStore } from "@/stores/notes.store"
+import { useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
+import Link from "next/link"
 
 const SidebarItem = ({
   note,
@@ -40,6 +42,7 @@ const SidebarItem = ({
     }
     setIsEditing(false)
   }
+
   if (isEditing) {
     return (
       <input
@@ -56,29 +59,65 @@ const SidebarItem = ({
       />
     )
   }
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: note.id })
+
+  const transformYOnly = transform
+    ? { ...transform, x: 0 } // elimina movimiento horizontal
+    : null
+
+  const style = {
+    transform: CSS.Transform.toString(transformYOnly),
+    transition,
+  }
+
   return (
-    <Link
+    <div
       key={note.id}
-      className={`flex items-center justify-center gap-2 p-2 rounded-md cursor-pointer w-full ${
+      className={`flex items-center justify-center gap-2 p-2 rounded-md w-full ${
+        isDragging && "z-[50000]"
+      } ${
         note.id === noteId
           ? "bg-blue-300 dark:bg-gray-700 font-bold"
           : "hover:bg-blue-300 dark:hover:bg-gray-700 font-medium"
       }`}
-      href={`/dashboard?note=${note.id}`}
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
       /* onClick={() => handleUpdateNote(note.id)} */
     >
       {open ? (
-        <div className="flex items-center justify-between gap-2 w-full">
+        <div className="flex items-center justify-between gap-2 w-full group relative">
           <div className="flex gap-1 items-center">
-            <Icon
-              icon="akar-icons:file"
-              className="text-black dark:text-white"
-              width="20"
-              height="20"
-            />
-            <span className="text-sm text-black dark:text-white">
-              {note.title}
+            <span
+              {...listeners}
+              style={{ touchAction: "none" }}
+              className="w-6 cursor-grab active:cursor-grabbing inline-block"
+              title="Arrastrar"
+            >
+              <span className="absolute top-0 opacity-100 sm:group-hover:opacity-100 sm:opacity-0 transition-opacity duration-200">
+                ☰
+              </span>
+              <Icon
+                icon="akar-icons:file"
+                className="absolute top-0 text-black opacity-0 dark:text-white sm:group-hover:opacity-0 sm:opacity-100 transition-opacity duration-200"
+                width="20"
+                height="20"
+              />
             </span>
+            <Link
+              className="text-sm text-black dark:text-white cursor-pointer"
+              href={`/dashboard?note=${note.id}`}
+            >
+              {note.title}
+            </Link>
           </div>
           <Menu>
             <MenuButton>
@@ -132,13 +171,15 @@ const SidebarItem = ({
           </Menu>
         </div>
       ) : (
-        <Icon
-          icon="akar-icons:file"
-          width="20"
-          className="text-black dark:text-white font-bold"
-        />
+        <Link href={`/dashboard?note=${note.id}`}>
+          <Icon
+            icon="akar-icons:file"
+            width="20"
+            className="text-black dark:text-white font-bold"
+          />
+        </Link>
       )}
-    </Link>
+    </div>
   )
 }
 export default SidebarItem

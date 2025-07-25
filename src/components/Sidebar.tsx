@@ -1,10 +1,23 @@
 "use client"
-import { useState, useCallback } from "react"
 import { useNotes, useNoteStore } from "@/stores/notes.store"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useSearchParams } from "next/navigation"
 import { PartialBlock } from "@blocknote/core"
+import { useState, useCallback } from "react"
 import SidebarItem from "./SidebarItem"
+import {
+  closestCenter,
+  DndContext,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core"
+import {
+  restrictToVerticalAxis,
+  restrictToParentElement,
+} from "@dnd-kit/modifiers"
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 
 const Sidebar = ({
   open,
@@ -118,6 +131,29 @@ const Sidebar = ({
     setImportError("")
   }, [])
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 2,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 150,
+        tolerance: 5,
+      },
+    })
+  )
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event
+    if (active.id !== over?.id) {
+      const oldIndex = notes.indexOf(active.id)
+      const newIndex = notes.indexOf(over.id)
+      /*  setItems(arrayMove(items, oldIndex, newIndex)) */
+    }
+  }
+
   return (
     <>
       <aside
@@ -131,8 +167,28 @@ const Sidebar = ({
         <div className="flex flex-col gap-2 sticky top-20 w-full h-[88vh]">
           {/* Navigation */}
           <nav className="flex flex-col justify-between h-full gap-y-1">
-            <div className="flex flex-col gap-1 overflow-y-auto max-h-[400px]">
-              {notes.length > 0 ? (
+            <div className="flex flex-col gap-1 overflow-y-auto overflow-x-hidden overscroll-x-none max-h-[400px] touch-pan-y">
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+                modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+              >
+                <SortableContext
+                  items={notes}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {notes.map((note) => (
+                    <SidebarItem
+                      key={note.id}
+                      note={note}
+                      noteId={noteId}
+                      open={open}
+                    />
+                  ))}
+                </SortableContext>
+              </DndContext>
+              {/*  {notes.length > 0 ? (
                 notes.map((note) => (
                   <SidebarItem
                     key={note.id}
@@ -145,7 +201,7 @@ const Sidebar = ({
                 <div className="flex items-center justify-center h-full text-gray-800 dark:text-gray-500">
                   <p className="text-sm">No hay notas disponibles</p>
                 </div>
-              )}
+              )} */}
             </div>
 
             {/* Botones de acción */}
