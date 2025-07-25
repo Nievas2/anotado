@@ -35,6 +35,7 @@ interface NoteState {
   // Nuevos métodos para BlockNote
   createEmptyNote: () => string // Retorna el ID de la nueva nota
   updateNoteContent: (noteId: string, content: BlockNoteBlock[]) => void
+  changeNoteOrder: (noteId: string, newIndex: number) => void
 }
 
 const storeApi: StateCreator<NoteState, [["zustand/immer", never]]> = (
@@ -132,6 +133,19 @@ const storeApi: StateCreator<NoteState, [["zustand/immer", never]]> = (
   clearAllNotes: () => {
     set((state) => {
       state.notes = []
+    })
+  },
+
+  changeNoteOrder: (noteId, newIndex) => {
+    set((state) => {
+      /* Note to move */
+      const noteIndex = state.notes.findIndex(
+        (note: { id: string }) => note.id === noteId
+      )
+      if (noteIndex !== -1 && newIndex >= 0 && newIndex < state.notes.length) {
+        const [movedNote] = state.notes.splice(noteIndex, 1)
+        state.notes.splice(newIndex, 0, movedNote)
+      }
     })
   },
 })

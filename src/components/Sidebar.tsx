@@ -26,7 +26,7 @@ const Sidebar = ({
   open: boolean
   setOpen: (open: boolean) => void
 }) => {
-  const { addNote, createNote } = useNoteStore()
+  const { addNote, createNote, changeNoteOrder } = useNoteStore()
   const noteId = useSearchParams().get("note")
   const notes = useNotes()
 
@@ -146,12 +146,8 @@ const Sidebar = ({
   )
 
   const handleDragEnd = (event: any) => {
-    const { active, over } = event
-    if (active.id !== over?.id) {
-      const oldIndex = notes.indexOf(active.id)
-      const newIndex = notes.indexOf(over.id)
-      /*  setItems(arrayMove(items, oldIndex, newIndex)) */
-    }
+    const { active, over } = event    
+    changeNoteOrder(active.id, over ? over.data.current.sortable.index : null)
   }
 
   return (

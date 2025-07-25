@@ -43,23 +43,6 @@ const SidebarItem = ({
     setIsEditing(false)
   }
 
-  if (isEditing) {
-    return (
-      <input
-        className="w-full p-2 rounded border-none ring-0 outline-none"
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") handleSave()
-          if (e.key === "Escape") setIsEditing(false)
-        }}
-        placeholder="Escribe un nuevo titulo"
-        ref={inputRef}
-        value={inputValue}
-        onBlur={handleSave}
-      />
-    )
-  }
-
   const {
     attributes,
     listeners,
@@ -76,6 +59,23 @@ const SidebarItem = ({
   const style = {
     transform: CSS.Transform.toString(transformYOnly),
     transition,
+  }
+
+  if (isEditing) {
+    return (
+      <input
+        className="w-full p-2 rounded border-none ring-0 outline-none"
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleSave()
+          if (e.key === "Escape") setIsEditing(false)
+        }}
+        placeholder="Escribe un nuevo titulo"
+        ref={inputRef}
+        value={inputValue}
+        onBlur={handleSave}
+      />
+    )
   }
 
   return (
